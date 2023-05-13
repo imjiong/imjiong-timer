@@ -1,0 +1,189 @@
+<!--
+    倒计时
+    制作者：jiong
+    外观设计：李中正
+    外观实现：jiong
+    内核设计：jiong
+    内核实现：jiong
+-->
+<!DOCTYPE html>
+<html id="fullscreen-content">
+    <head>
+        <meta charset="UTF-8">
+        <title>倒计时</title>
+        <style>
+            html{
+                background-image: url("star.jpg");
+                background-attachment: fixed;
+                background-color: black;
+                color: white;
+                font-size: 20px;  
+                /*filter: grayscale(65%); */
+            }
+            .contentleft{
+                text-align: center;
+                font-size: 5em;
+                position: fixed;
+                left: 0em;
+                top: 0em;   
+                padding-top: 0.6em;
+                margin: auto;
+                width: 960px;
+            }
+            .contentmiddle{
+                text-align: center;
+                font-size: 5em;
+                position: fixed;
+                left: 0em;
+                top: 0em;   
+                padding-top: 0.6em;
+                margin: auto;
+                width: 1920px;
+            }
+            .content0{
+                text-align: center;
+                font-size: 5em;
+                position: fixed;
+                left: 0em;
+                top: 0em;   
+                padding-top: 0.6em;
+                margin: auto;
+                width: 1610px;
+            }
+            .bottom{
+                /*background-color: rgb(0,0, 0,0.5);*/
+                height: 1.5em;
+                width: 960px;
+                position: fixed;
+                bottom: 0;
+                /*text-align: center;*/
+            }
+            .control{
+                color: gray;
+            }
+            #name{
+                font-family: "黑体";
+                font-size: 100%;
+                color: orangered;
+            }
+            #demo{
+                font-family: "仿宋";
+                font-size: 70%;
+            }
+            #content{
+                font-family: Consolas,"宋体";
+            }
+        </style>
+    </head>
+    <body>
+        <div id="tx" class="content0" ><span id="name">初始化中······</span><br><span id="demo">--</span><br><span id="content">--天，--:--:--</span></div>
+        <div id="bottom" class="bottom" style="background-color: rgb(0,0, 0,0.5);">
+            <span id="errors">用户版</span>
+            <a class="control" onclick="enterFullscreen()">全屏</a>
+            <a class="control" onclick="exitFullscreen()">退出全屏</a> 
+            <a class="control" onclick="turnoff()">关闭</a> 
+            
+            <a class="control" onclick="turnleft()">靠左</a> 
+            <a class="control" onclick="turnmiddle()">居中</a> 
+            <!--
+            <a class="control" onclick="warning()">开发者模式（待开发）</a> 
+            -->
+            <a class="control" onclick="turn0()">偏左（露出考勤栏）</a> 
+        </div>
+        <script>
+            //全屏
+            const elem = document.getElementById("fullscreen-content");
+            
+            //document.onload(enterFullscreen());
+
+            function enterFullscreen() {            //进入全屏
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                }
+            }
+    
+            function exitFullscreen() {             //退出全屏
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+            
+            function turnoff()
+            {
+                if(window.confirm("您确定要关闭吗？") == true)
+                    window.close();
+            }
+
+            const myDiv = document.querySelector("#tx");
+            const btm = document.getElementById("buttom");
+            //靠左！！与警告
+            function turnleft()
+            {              
+                var alarm = window.confirm("警告！！！！！\n\n　　鉴于部分设备散热性能不佳，大面积遮挡屏幕会导致屏幕温度升高，损耗寿命！！！！\n　　非必要情况下请勿使用此功能。\n　　由此造成的寿命损耗与设备损坏与本项目及项目开发者无关。特此警告。\n\n　　您确定要使用此功能吗？");
+                if(alarm == true)
+                {
+                    myDiv.classList.add("contentleft");
+                    myDiv.classList.remove("contentmiddle");
+                    myDiv.classList.remove("content0");
+                    document.getElementById("errors").innerHTML = "请注意散热！！";
+                    //btm.style = "background-color:rgb(255,0,0,0.5);";
+                    window.alert("损耗寿命成功！点击确定生效。");
+                }
+            }
+            //居中
+            function turnmiddle()
+            {
+                myDiv.classList.remove("contentleft");
+                myDiv.classList.add("contentmiddle");
+                myDiv.classList.remove("content0");
+                window.alert("修改成功！点击确定生效。");
+                document.getElementById("errors").innerHTML = "用户版";
+            }
+            //偏左
+            function turn0()
+            {
+                myDiv.classList.remove("contentleft");
+                myDiv.classList.remove("contentmiddle");
+                myDiv.classList.add("content0");
+                window.alert("修改成功！点击确定生效。");
+                document.getElementById("errors").innerHTML = "用户版";
+            }
+            
+            //倒计时内核部分
+            var target_date = new Date("2023/05/15 08:00:00");
+            const target_festival = "期中考试";
+            document.getElementById("name").innerHTML = target_festival;
+            var now_time = new Date();
+            var text = document.getElementById("content");
+            if(now_time > target_date)
+                document.getElementById("demo").innerHTML = "已过";
+                document.getElementById("demo").innerHTML = "还有";
+                setInterval(function(){
+                    var now_time = new Date();
+                var delta = Math.abs(Math.floor((target_date - now_time)/1000));
+                var day =  Math.floor(delta / 86400) ;
+                var hour = Math.floor( delta / 3600 % 24);
+                var minute = Math.floor(delta / 60 % 60);
+                var second = Math.floor(delta % 60);
+                //console.log( delta);
+                if(hour < 10)
+                    hour = "0" + hour;
+                if(minute < 10)
+                    minute = "0" + minute;
+                if(second < 10)
+                    second = "0" + second;
+                if(day>20)
+                    text.style = "color:lightgreen";
+                else 
+                {
+                    if(day<=20 && day>10)
+                        text.style = "color:yellow";
+                    else
+                        if(day<=10)
+                            text.style = "color:orangered";
+                }
+                text.innerText = day + " 天！ " + hour + ":" + minute + ":" + second;
+                },100);
+        </script>
+    </body>
+</html>

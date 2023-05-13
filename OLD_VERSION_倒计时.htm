@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html style="background-color: black;"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF8">
+        <title>倒计时</title>
+        <style>
+	html{
+		/*text-align: center;*/
+		}
+            body {
+                padding: 10px;
+		color: white;
+                /*background-color: white;*/
+            }
+
+            .text- {
+                /*color: black;*/
+		font-size: 114.514px;
+            }
+
+            .container {
+                vertical-align: middle;
+                /*text-align: center;*/
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            .out_container {
+                width: 100%;
+                height: 100%;
+            }
+
+	    #target_span {
+		color: red;
+		font-weight: bold;
+	    }
+
+	    #text {
+		color: gray;
+	    }
+
+        .imga {
+                /*filter:sepia();*/
+                rotate: 0;
+        }
+		.bold
+		{
+			background-color: gray;
+			color: black;
+			font-family: 'Times New Roman', Times, serif;
+		}
+		.wanlian{
+			font-size: 70px;
+			color: white;
+			font-family: '方正魏碑简体';
+		}
+        </style>
+    </head>
+    <body>
+        <div class="outer_container">
+            <img src="./logo.png" style="margin-left: 200px;" height="200px"/>
+            <div style="height: 50%;">&nbsp;</div>
+            <div style="height: 50%;">&nbsp;</div>
+            <div class="container text-" style="margin-left: 20px;">
+                距离<span id="target_span"></span><span id="type"></span><br><span id="text"></span>
+            </div>
+	    <div class="container" style="font-family: '仿宋','方正仿宋简体','方正仿宋_GBK'; font-size: 70px; margin-top: 1em;">
+		</div>
+        </div>
+        <script>
+            var spaner = document.getElementById("text");
+            var target_datetime = "2023/05/15 00:00:00";
+            var target_festival = "期中考试";
+			var target_type = "还有";
+            var target_date = new Date( target_datetime);
+            document.getElementById("type").innerText = target_type;
+            document.getElementById( "target_span").innerText = target_festival;
+            setInterval( function() {
+                var delta = Math.floor((target_date - (new Date())) / 1000);
+                //console.log( delta);
+				var second = delta % 60;
+                var minute_r = (delta - second) / 60;
+                var minute = minute_r % 60;
+                var hour_r = (minute_r - minute) / 60;
+                var hour = hour_r % 24;
+                var day_r = (hour_r - hour) / 24;
+				var str = "" + Math.abs(day_r) + "天" +Math.abs(hour) + "时" + Math.abs(minute) + "分" + Math.abs(second) + "秒";
+                spaner.innerText = str;
+                //console.log( str);
+            }, 500);
+        </script>
+    </body>
+</html>

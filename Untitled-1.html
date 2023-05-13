@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fullscreen Example</title>
+  <style>
+    #fullscreen-content {
+      background-color: black;
+      color: white;
+      font-size: 36px;
+      text-align: center;
+      padding-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="fullscreen-content">
+    Press F11 or click the button to enter fullscreen mode.
+  </div>
+  
+  <button onclick="enterFullscreen()">Enter Fullscreen</button>
+  <button onclick="exitFullscreen()">Exit Fullscreen</button>
+  
+  <script>
+    var elem = document.getElementById("fullscreen-content");
+    
+    function enterFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      }
+    }
+    
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  </script>
+</body>
+</html>
